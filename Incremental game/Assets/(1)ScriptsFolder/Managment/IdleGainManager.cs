@@ -3,7 +3,10 @@ using TMPro;
 
 public class IdleGainManager : MonoBehaviour
 {
-    public int idleGainAmount = 0;
+    [SerializeField] public float globalMultiplier;
+
+
+    [SerializeField] public  int idleGainAmount = 0;
     [SerializeField] float timeBetwenIdleGain = 1f;
 
     float nextIdleCheck = 0f;
@@ -26,7 +29,7 @@ public class IdleGainManager : MonoBehaviour
     {   
         if (Time.time >= nextIdleCheck)
         {
-            CurrencyManager.currencyManagerInstance.GainCoin(idleGainAmount);
+            CurrencyManager.currencyManagerInstance.GainCoin(idleGainAmount * globalMultiplier);
             nextIdleCheck = Time.time + timeBetwenIdleGain;           
         }        
     }
@@ -35,7 +38,7 @@ public class IdleGainManager : MonoBehaviour
     {
         if (cpsText != null)
         {
-            cpsText.text = ("CPS:" + idleGainAmount.ToString());
+            cpsText.text = ("CPS:" + (idleGainAmount * globalMultiplier).ToString());
         }
     }
     void SetCpsText()
